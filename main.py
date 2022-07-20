@@ -46,7 +46,7 @@ for file in texts:
 sorted_list = sorted(dict_.items(), key=lambda item: item[1])
 
 
-with open('Mord_på.txt', 'w+', encoding='utf-8') as f:
+with open('Mord.txt', 'w+', encoding='utf-8') as f:
     for level_1 in sorted_list:
         f.write(f'{level_1[0]}\n')
         f.write(f'{level_1[1][0]}\n')
