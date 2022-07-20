@@ -34,7 +34,7 @@ FILE_DIR = 'sorted'
 directory = r'C:\Users\Артем\PycharmProjects\HomeWork_2\sorted'
 files = os.listdir(directory)
 texts = filter(lambda x: x.endswith('.txt'), files)
-dict = {}
+dict_ = {}
 for file in texts:
     path_ = os.path.join(ROOT_PATH, FILE_DIR, file)
     with open(path_, encoding='utf-8') as text:
@@ -42,22 +42,18 @@ for file in texts:
         for strings in text:
             message.append(strings.strip())
             lens = len(message)
-        dict[file] = [len(message), message]
-sorted_list = sorted(dict.items(), key=lambda item: item[1])
-pprint(sorted_list)
+        dict_[file] = [len(message), message]
+sorted_list = sorted(dict_.items(), key=lambda item: item[1])
 
 
 with open('Mord_på.txt', 'w+', encoding='utf-8') as f:
-    for qqq in sorted_list:
-        line = ' '.join(str(x) +'\n' for x in qqq)
-        for www in qqq:
-
-
-        f.write(line)
-
-
+    for level_1 in sorted_list:
+        f.write(f'{level_1[0]}\n')
+        f.write(f'{level_1[1][0]}\n')
+        for level_2 in level_1[1][1]:
+            line = ''.join(str(x) for x in level_2)
+            f.write(f'{line}\n')
 
 
 pprint(cook_book)
 pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет', 'Баарш'], 3))
-
