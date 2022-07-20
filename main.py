@@ -1,16 +1,45 @@
-cook_book = {}
-file = open("recipes.txt", 'r', encoding='utf-8')
-for line in file:
-    num = int(file.readlines(+1)[0].strip('\n'))
-    print(num)
-    if not line.strip('\n').isdigit():
-        dish = line.strip('\n')
-        for ing in range(num):
-            cook_book[dish] = ['?']#Здесь я понимаю что нужно расписать, это я сделаю, но пока туда ничего не попадает
-# Ну или в лучшем случае как уже писал получается {'Омлет' : []}
-print(cook_book)
-# Здесь у меня что-то совсем ничего не выходит.
-#Как выделить колличество ингредиентов чтобы оно не итерировалось?
+#from pprint import pprint
+import os
 
-#В общем уже третий день топчусь ничего не выходит. Подскажите как и что здесь с этим readlines. До этого всё было
-#не сложно или даже интуитивно понятно, но вот с этой темой я прям в ступоре как головой об стену бьюсь
+
+with open('recipes.txt', encoding='utf-8') as file:
+    cook_book = {}
+    for line in file:
+        dish = line.strip()
+        ingredient_list = []
+        for item in range(int(file.readline())):
+            ingredient_dict = {}
+            name, quantity, measure = file.readline().split(" |")
+            ingredient_dict['ingredient_name'] = name.strip(' \n')
+            ingredient_dict['quantity'] = int(quantity.strip(' \n'))
+            ingredient_dict['measure'] = measure.strip(' \n')
+            ingredient_list.append(ingredient_dict)
+        cook_book[dish] = ingredient_list
+        file.readline()
+
+
+def get_shop_list_by_dishes(dishes, person_count):
+    shop_list = {}
+    for items in dishes:
+        for keys, values in cook_book.items():
+            if keys in items:
+                for value in values:
+                    value['quantity'] *= person_count
+                    shop_list[value.pop('ingredient_name')] = value
+    return shop_list
+
+
+directory = r'C:\Users\Артем\PycharmProjects\HomeWork_2\sorted'
+files = os.listdir(directory)
+texts = filter(lambda x: x.endswith('.txt'), files)
+dict = {}
+for file in files:
+    print(os.path.abspath(file))
+    n = os.path.abspath(file)
+    with open(n) as text:
+        print(n)
+print(dict)
+
+
+#pprint(cook_book)
+#pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет', 'Баарш'], 3))
