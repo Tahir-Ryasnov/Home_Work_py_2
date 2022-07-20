@@ -1,4 +1,4 @@
-#from pprint import pprint
+from pprint import pprint
 import os
 
 
@@ -29,17 +29,35 @@ def get_shop_list_by_dishes(dishes, person_count):
     return shop_list
 
 
+ROOT_PATH = os.getcwd()
+FILE_DIR = 'sorted'
 directory = r'C:\Users\Артем\PycharmProjects\HomeWork_2\sorted'
 files = os.listdir(directory)
 texts = filter(lambda x: x.endswith('.txt'), files)
 dict = {}
-for file in files:
-    print(os.path.abspath(file))
-    n = os.path.abspath(file)
-    with open(n) as text:
-        print(n)
-print(dict)
+for file in texts:
+    path_ = os.path.join(ROOT_PATH, FILE_DIR, file)
+    with open(path_, encoding='utf-8') as text:
+        message = []
+        for strings in text:
+            message.append(strings.strip())
+            lens = len(message)
+        dict[file] = [len(message), message]
+sorted_list = sorted(dict.items(), key=lambda item: item[1])
+pprint(sorted_list)
 
 
-#pprint(cook_book)
-#pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет', 'Баарш'], 3))
+with open('Mord_på.txt', 'w+', encoding='utf-8') as f:
+    for qqq in sorted_list:
+        line = ' '.join(str(x) +'\n' for x in qqq)
+        for www in qqq:
+
+
+        f.write(line)
+
+
+
+
+pprint(cook_book)
+pprint(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет', 'Баарш'], 3))
+
